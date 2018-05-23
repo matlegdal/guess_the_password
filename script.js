@@ -44,7 +44,7 @@ require([
 
         // choose 1 word amongst the list to be the password and set the guessCount and the listener on wordlist
         password = getRandomWords(randomWords, 1)[0];
-        console.log(password);
+        // console.log(password);
         guessCount = 4;
         setGuessCount(guessCount);
         handleWordListener = on(wordList, "li:click", updateGame);
@@ -79,7 +79,8 @@ require([
             } else {
                 data.node.innerHTML += `--> Nope! Matching letters: ${compareGuess(data.word)}`;
                 if (guessCount === 0) {
-                    endGame("You lost...");
+                    let message = `You lost... The correct password was ${password}.`;
+                    endGame(message);
                 }
             }
         }
@@ -117,10 +118,15 @@ require([
 
     function resetGame(event) {
         event.preventDefault();
+        // hide the game screen
         domClass.replace("game-screen", "hide", "show");
 
         setTimeout(function () {
+            // empty the word list and remove the endgame message
             domConstruct.empty(wordList);
+            domClass.replace("endGame", "hide", "show");
+            dom.byId("endMessage").innerText = "";
+            // restart the game and show the game screen
             startGame();
             domClass.replace("game-screen", "show", "hide");
         }, 1000);
