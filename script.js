@@ -117,9 +117,12 @@ require([
 
     function resetGame(event) {
         event.preventDefault();
-
         domClass.replace("game-screen", "hide", "show");
-        domConstruct.empty(wordList);
-        startGame();
+
+        setTimeout(function () {
+            domConstruct.empty(wordList);
+            startGame();
+            domClass.replace("game-screen", "show", "hide");
+        }, 1000);
     }
 });
